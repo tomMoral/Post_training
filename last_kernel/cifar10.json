@@ -1,0 +1,84 @@
+{
+	"network": {
+		"inputs": {
+			"type": "image",
+			"shape": [-1, 24, 24, 3]
+		},
+		"outputs": [-1],
+		"layers": [
+			{
+				"name": "conv1",
+				"type": "linear_conv",
+				"shape": [5, 5, 3, 64],
+				"strides": [1, 1, 1, 1],
+				"padding": "SAME",
+				"stddev": 5e-2,
+				"biases": 0.0,
+				"activation": "relu"
+			}, {
+				"name": "pool1",
+				"type": "max_pool",
+				"ksize": [1, 3, 3, 1],
+				"strides": [1, 2, 2, 1],
+				"padding": "SAME"
+			}, {
+				"name": "norm1",
+				"type": "lrn",
+				"depth_radius": 4,
+				"bias": 1.0,
+				"alpha": 0.00011111111111111112,
+				"beta": 0.75
+			}, {
+				"name": "conv2",
+				"type": "linear_conv",
+				"shape": [5, 5, 64, 64],
+				"strides": [1, 1, 1, 1],
+				"padding": "SAME",
+				"stddev": 5e-2,
+				"biases": 0.1,
+				"activation": "relu"
+			}, {
+				"name": "norm2",
+				"type": "lrn",
+				"depth_radius": 4,
+				"bias": 1.0,
+				"alpha": 0.00011111111111111112,
+				"beta": 0.75
+			}, {
+				"name": "pool2",
+				"type": "max_pool",
+				"ksize": [1, 3, 3, 1],
+				"strides": [1, 2, 2, 1],
+				"padding": "SAME"
+			}, {
+				"name": "flatten",
+				"type": "flatten"
+			}, {
+				"name": "local3",
+				"type": "linear",
+				"shape": [384],
+				"stddev": 0.04,
+				"biases": 0.1,
+				"reg_l2": 0.004,
+				"activation": "relu"
+			}, {
+				"name": "local4",
+				"type": "linear",
+				"shape": [192],
+				"stddev": 0.04,
+				"biases": 0.1,
+				"reg_l2": 0.004,
+				"activation": "relu"
+			}, {
+				"name": "linear_softmax",
+				"type": "linear",
+				"shape": [10],
+				"stddev": 0.005208333333333333,
+				"biases": 0.0,
+				"reg_l2": 0.001
+			}
+		]
+
+	},
+	 "training": {}
+}
